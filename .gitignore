@@ -11,6 +11,13 @@ jspm_packages/
 # Optional npm cache directory
 .npm
 
+# Runtime data
+
+pids
+*.pid
+*.seed
+*.pid.lock
+
 build
 npm-debug.log
 .nyc
