@@ -18,6 +18,11 @@ pids
 *.seed
 *.pid.lock
 
+# Logs
+logs
+*.log
+npm-debug.log*
+
 build
 npm-debug.log
 .nyc
