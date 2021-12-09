@@ -1,7 +1,20 @@
 # Project exclude paths
+
+# Dependency directories
 node_modules
+jspm_packages/
+
+
+# Output of 'npm pack'
+*.tgz
+
+# Optional npm cache directory
+.npm
+
 build
 npm-debug.log
 .nyc
 .env
+.env.test
 .DS_Store
+
