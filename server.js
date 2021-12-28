@@ -1,11 +1,13 @@
 const express = require("express");
+let models = require("./models/models_table")
 // const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
 
 
 
+const actor = new models.Actor("OPT", "OPERATORE", "MIL")
 
-
+console.log("actor", actor)
 const app = express();
 
 var corsOptions = {

@@ -60,7 +60,7 @@ class EventResult{
     }
 }
 
-class operator{
+class Operator{
     constructor(_id,_name,_surname,_address,_user,_password,_producer_id,_type,_sup_op) {
 
         this.id=_id;
@@ -125,7 +125,7 @@ class Product {
     }
 }
 
-class product_detail{
+class Product_detail{
     constructor(_id,_name,_description,_quantity,_type,_unit_measure,_product_id,_residualPerc) {
 
         this.id=_id;
@@ -139,3 +139,4 @@ class product_detail{
 
     }
 }
+module.exports = {ActorGroup, Actor, Enum, Event, EventResult, Operator, Parameter, ParameteDetail, Producer, Product, Product_detail}
