@@ -19,7 +19,7 @@ class Actor{
 
 class Enum{
     constructor(_id,_value_num,_value_string,_recorsiveNum) {
-        this.id=id;
+        this.id=_id;
         this.value_num=_value_num;
         this.value_string=_value_string;
         this.recorsiveNum=_recorsiveNum;
