@@ -2,9 +2,7 @@ const express = require("express");
 // const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
 
-/*const test = require("/app/routes/tutorial.routes");
-console.log(test);
-*/
+
 
 
 
@@ -20,7 +18,7 @@ app.use(cors(corsOptions));
 app.use(express.json()); /* bodyParser.json() is deprecated */
 
 // parse requests of content-type - application/x-www-form-urlencoded
-//app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is deprecated */
+app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is deprecated */
 
 // simple route
 app.get("/", (req, res) => {
@@ -30,7 +28,7 @@ app.get("/", (req, res) => {
 
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 
