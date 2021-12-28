@@ -5,7 +5,7 @@ const cors = require("cors");
 
 
 
-const actor = new models.Actor("OPT", "OPERATORE", "MIL")
+const actor = new models.Actor("OPT", "OPERATORE", "MIL") //import model
 
 console.log("actor", actor)
 const app = express();
