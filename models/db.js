@@ -1,20 +1,17 @@
-const mysql = require("mysql");
+const mysql = require("mysql2/promise");
+const bluebird = require('bluebird');
 const dbConfig = require("../config/db.config.js");
 
-var connection = mysql.createConnection({
+// Create a connection to the database
+const connection = mysql.createConnection({
     host: dbConfig.HOST,
     user: dbConfig.USER,
     password: dbConfig.PASSWORD,
-    database: dbConfig.DB
+    database: dbConfig.DB,
+    Promise: bluebird
 });
 
 
 
-connection.connect();
 
-connection.query('SELECT * FROM tutorials', function(err, rows, fields)
-{
-    if (err) throw err;
-
-    console.log(rows[0]);
-});
+module.exports = connection;
