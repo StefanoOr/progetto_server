@@ -1,4 +1,4 @@
-const db = require("../models/models_table");
+const db = require("../models/db");
 const {ActorGroup, Actor, Enum, Event, EventResult, Operator, Parameter, ParameteDetail, Producer, Product,
     Product_detail
 } = require("../models/models_table");
