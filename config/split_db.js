@@ -95,8 +95,8 @@ const setEvent = async function (_event) {
     const description = _event.description;
     const resource = _event.resource;
     const output_product = _event.output_product;
-    const kFact = _event.Kfact;
-    cost actor_group = _event.actor_group;
+    const Kfact = _event.Kfact;
+    const actor_group = _event.actor_group;
     const help = _event.help;
 
         const query = "INSERT INTO event (id,name,description,resource,output_product,Kfact,actor_group,help) VALUES(?,?,?,?,?,?,?,?)"
@@ -236,12 +236,12 @@ const setProduct = async function (_product) {
     try {
 
     const id = _product.id;
-    const min_time_intervall = _product.min_time_intervall;
+    const min_time_interval = _product.min_time_intervall;
     const producer_id = _product.producer_id;
     const finish = _product.finish;
 
-        const query = "INSERT INTO product (id,min_time_intervall,producer_id,finish) VALUES(?,?,?,?)"
-        const [rows, fields] = await (await connection).execute(query, [id,min_time_intervall,producer_id,finish] );
+        const query = "INSERT INTO product (id,min_time_interval,producer_id,finish) VALUES(?,?,?,?)"
+        const [rows, fields] = await (await connection).execute(query, [id,min_time_interval,producer_id,finish] );
         console.log("rows", rows)
         console.log("fields", fields)
 
@@ -267,7 +267,7 @@ const setProductDetail = async function (_productDetail) {
 
 
         const query = "INSERT INTO product_detail (id,name,description,quantity,type,unit_measure,product_id,residualPerc) VALUES(?,?,?,?,?,?,?,?)"
-        const [rows, fields] = await (await connection).execute(query, [ id,name,description,quantity,type,unit_measure,producer_id,residualPerc] );
+        const [rows, fields] = await (await connection).execute(query, [ id,name,description,quantity,type,unit_measure,product_id,residualPerc] );
         console.log("rows", rows)
         console.log("fields", fields)
 
@@ -279,15 +279,3 @@ const setProductDetail = async function (_productDetail) {
 
 
 
-
-setActor(actor)
-setActorGroup(actorGroup)
-setEnum(enum_)
-setEvent(event)
-setEventResult(eventResult)
-setOperator(operator)
-setParameter(parameter)
-setParameteDetail(parameter_detail)
-setProducer(producer)
-setProduct(product)
-setProductDetail(product_detail)

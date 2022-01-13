@@ -1,6 +1,6 @@
 const express = require("express");
 let models = require("./models/models_table")
-const prova = require("./config/split_db")
+//const prova = require("./config/split_db")
 // const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
 
@@ -26,6 +26,13 @@ app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is d
 // simple route
 app.get("/", (req, res) => {
     res.json({ message: "Server on" });
+});
+
+app.post("/login",(req,res)=> {
+
+    console.log("Login ")
+    res.json({ message: "login"});
+
 });
 
 
