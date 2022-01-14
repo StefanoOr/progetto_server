@@ -1,4 +1,4 @@
-const connection = require("../models/db");
+const connection = require("./models/db");
 const {ActorGroup, Actor, Enum, Event, EventResult, Operator, Parameter, ParameteDetail, Producer, Product,
     Product_detail
 } = require("../models/models_table");
@@ -30,6 +30,9 @@ console.log(producer);
 console.log(product);
 console.log(product_detail);
 
+
+
+
 const setActor = async function (_actor) {
     try {
         console.log("table_model", _actor)
@@ -38,19 +41,19 @@ const setActor = async function (_actor) {
 
         const name = _actor.name;
         const producer = _actor.producer_id
-        const query = "INSERT INTO actor(id,name, producer_id) VALUES(?,?,?)"
+        const query = "INSERT INTO actor(id,name, producer_id) VALUES(?,?,?)";
         /*query è la query come la scriveresti in sql
         * i valori sono sostituiti da un ?
         * in ordine, il primo preleva l'id
         * il secondo il nome
         * il terzo il producer*/
         const [rows, fields] = await (await connection).execute(query, [ id, name, producer] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
 
@@ -58,14 +61,14 @@ const setActorGroup = async function (_actorGroup) {
     try {
       const id = _actorGroup.id;
       const actor_id = _actorGroup.actor_id;
-        const query = "INSERT INTO actor_group(id,actor_id) VALUES(?,?)"
+        const query = "INSERT INTO actor_group(id,actor_id) VALUES(?,?)";
         const [rows, fields] = await (await connection).execute(query, [ id, actor_id] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
 
@@ -76,14 +79,14 @@ const setEnum = async function (_enum) {
     const value_string = _enum.value_string;
     const recorsiveNum= _enum.recorsiveNum;
 
-        const query = "INSERT INTO enum(id,value_num,value_string,recorsiveNum) VALUES(?,?,?,?)"
+        const query = "INSERT INTO enum(id,value_num,value_string,recorsiveNum) VALUES(?,?,?,?)" ;
         const [rows, fields] = await (await connection).execute(query, [id,value_num,value_string,recorsiveNum] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
 
@@ -99,14 +102,14 @@ const setEvent = async function (_event) {
     const actor_group = _event.actor_group;
     const help = _event.help;
 
-        const query = "INSERT INTO event (id,name,description,resource,output_product,Kfact,actor_group,help) VALUES(?,?,?,?,?,?,?,?)"
+        const query = "INSERT INTO event (id,name,description,resource,output_product,Kfact,actor_group,help) VALUES(?,?,?,?,?,?,?,?)";
         const [rows, fields] = await (await connection).execute(query, [ id,name,description,resource,output_product,Kfact,actor_group,help] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
 
@@ -126,17 +129,23 @@ const setEventResult = async function (_eventResult) {
     const producer_id = _eventResult.producer_id;
     const operator_id = _eventResult.operator_id;
 
-        const query = "INSERT INTO event_result (id,name,description,quantity,product_id,type,actor_id,product_detail_id,datetime,id_event,producer_id,operator_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)"
+        const query = "INSERT INTO event_result (id,name,description,quantity,product_id,type,actor_id,product_detail_id,datetime,id_event,producer_id,operator_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         const [rows, fields] = await (await connection).execute(query, [ id,name,description,quantity,product_id,type,actor_id,product_detail_id,datetime,id_event,
         producer_id,operator_id] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
+
+
+
+
+
+
 
 const setOperator = async function (_operator) {
     try {
@@ -153,14 +162,14 @@ const setOperator = async function (_operator) {
 
 
 
-        const query = "INSERT INTO operator (id,name,surname,address,user,password,producer_id,type,sup_op) VALUES(?,?,?,?,?,?,?,?,?)"
+        const query = "INSERT INTO operator (id,name,surname,address,user,password,producer_id,type,sup_op) VALUES(?,?,?,?,?,?,?,?,?)";
         const [rows, fields] = await (await connection).execute(query, [ id,name,surname,address,user,password,producer_id,type,sup_op] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
 
@@ -175,14 +184,14 @@ const setParameter = async function (_parameter) {
     const detail = _parameter.detail;
     const event_id = _parameter.event_id;
 
-        const query = "INSERT INTO parameter (id,name,mandatory,type,detail,event_id) VALUES(?,?,?,?,?,?)"
+        const query = "INSERT INTO parameter (id,name,mandatory,type,detail,event_id) VALUES(?,?,?,?,?,?)";
         const [rows, fields] = await (await connection).execute(query, [ id,name,mandatory,type,detail,event_id] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
 
@@ -201,14 +210,14 @@ const setParameteDetail = async function (_parameterDetail) {
     const photo_upload = _parameterDetail.photo_upload;
     const enum_id = _parameterDetail.enum_id;
 
-        const query = "INSERT INTO parameter_detail (id,val_min,val_max,dim_max,fixed,help_param,hash_type,url_upload,photo_upload,enum_id) VALUES(?,?,?,?,?,?,?,?,?,?)"
+        const query = "INSERT INTO parameter_detail (id,val_min,val_max,dim_max,fixed,help_param,hash_type,url_upload,photo_upload,enum_id) VALUES(?,?,?,?,?,?,?,?,?,?)";
         const [rows, fields] = await (await connection).execute(query, [ id,val_min,val_max,dim_max,fixed,help_param,hash_type,url_upload,photo_upload,enum_id] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
 
@@ -221,14 +230,14 @@ const setProducer = async function (_producer) {
     const description = _producer.description;
     const website = _producer.website;
 
-        const query = "INSERT INTO producer (id,name,description,website) VALUES(?,?,?,?)"
+        const query = "INSERT INTO producer (id,name,description,website) VALUES(?,?,?,?)";
         const [rows, fields] = await (await connection).execute(query, [ id,name,description,website] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
 
@@ -240,14 +249,14 @@ const setProduct = async function (_product) {
     const producer_id = _product.producer_id;
     const finish = _product.finish;
 
-        const query = "INSERT INTO product (id,min_time_interval,producer_id,finish) VALUES(?,?,?,?)"
+        const query = "INSERT INTO product (id,min_time_interval,producer_id,finish) VALUES(?,?,?,?)";
         const [rows, fields] = await (await connection).execute(query, [id,min_time_interval,producer_id,finish] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
 
@@ -266,16 +275,36 @@ const setProductDetail = async function (_productDetail) {
     const residualPerc = _productDetail.residualPerc;
 
 
-        const query = "INSERT INTO product_detail (id,name,description,quantity,type,unit_measure,product_id,residualPerc) VALUES(?,?,?,?,?,?,?,?)"
+        const query = "INSERT INTO product_detail (id,name,description,quantity,type,unit_measure,product_id,residualPerc) VALUES(?,?,?,?,?,?,?,?)";
         const [rows, fields] = await (await connection).execute(query, [ id,name,description,quantity,type,unit_measure,product_id,residualPerc] );
-        console.log("rows", rows)
-        console.log("fields", fields)
+        console.log("rows", rows);
+        console.log("fields", fields);
 
 
     } catch (e) {
-        console.error("error insert", e)
+        console.error("error insert", e);
     }
 }
+
+const getActor = async function(_operator){
+    try{
+
+        const id = _actor.id;
+        const user = _operator.user;
+        const password = _operator.password;
+
+          const query = "SELECT * FROM  operator WHERE user ='nick'";
+                const [rows, fields] = await (await connection).execute(query, [user,password] );
+
+                console.log("rows", rows);
+                        console.log("fields", fields);
+    } catch (e) {
+        console.error("error insert", e);
+}
+
+//getActor(actor);
+
+
 
 
 
