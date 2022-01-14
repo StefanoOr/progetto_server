@@ -35,12 +35,12 @@ console.log(product_detail);
 
 const setActor = async function (_actor) {
     try {
-        console.log("table_model", _actor)
+        console.log("table_model", _actor);
 
         const id = _actor.id;
 
         const name = _actor.name;
-        const producer = _actor.producer_id
+        const producer = _actor.producer_id;
         const query = "INSERT INTO actor(id,name, producer_id) VALUES(?,?,?)";
         /*query è la query come la scriveresti in sql
         * i valori sono sostituiti da un ?
@@ -302,6 +302,7 @@ const getActor = async function(_operator){
         console.error("error insert", e);
 }
 
+}
 //getActor(actor);
 
 
