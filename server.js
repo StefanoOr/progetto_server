@@ -56,3 +56,12 @@ app.listen(PORT, () => {
 
 
 });
+
+/*
+L'errore che da quando parte il server è questo:
+
+Error: Cannot find module './models/db'
+
+perchè .models/db non è un modulo. Rivedere come si richiamano i file per poter essere usati in altri file
+
+ */
