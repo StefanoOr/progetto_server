@@ -1,17 +1,16 @@
 const express = require("express");
 let models = require("./models/models_table");
-const prova = require("./config/split_db");
-// const bodyParser = require("body-parser"); /* deprecated */
+//const prova = require("./config/split_db");
+
 const cors = require("cors");
-const connection = require("./models/db.js");
+const connection = require("./models/db");
+
+console.log("questo è il console log:",connection);
 /*const {ActorGroup, Actor, Enum, Event, EventResult, Operator, Parameter, ParameteDetail, Producer, Product,
     Product_detail
 } = require("../models/models_table");
 */
 
-const actor = new models.Actor("OPT", "OPERATORE", "MIL") //import model
-
-console.log("actor", actor)
 const app = express();
 
 var corsOptions = {
@@ -30,18 +29,29 @@ app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is d
 app.get("/", (req, res) => {
     res.json({ message: "Server on" });
 });
-app.post("/login",(req,res)=> {
-    
+app.post("/login",async(req,res)=> {
 
     console.log("Login ");
+    console.log("Login ");
 
-    var username = req.body.username;
-    	var password = req.body.password;
-    	console.log(username);
-    	console.log(password);
+    const ciccio = req.body.username;
+    const password1 = req.body.password;
+    	
 
+        const query = "SELECT user, password FROM operator WHERE user=? AND password=? ";
+        /*query è la query come la scriveresti in sql
+        * i valori sono sostituiti da un ?
+        * in ordine, il primo preleva l'id
+        * il secondo il nome
+        * il terzo il producer*/
+       
+        const [rows, fields] =  await (await connection).execute(query, [ciccio ,password1] );
+        console.log("rows", rows);
+        console.log("fields", fields);
+
+    
     res.setHeader('Title', 'value');
-    res.end(JSON.stringify({ username: username, password: password }));
+    res.end(JSON.stringify({ username: ciccio, password: password1 }));
 
 
 });
