@@ -1,10 +1,12 @@
 module.exports = app => {
-  const abata = require("../controllers/abata.controllers.js"); //non lo trova perchè è un file vuoto
+  const abata = require("../controllers/abata.controller.js"); //non lo trova perchè è un file vuoto
 
   var router = require("express").Router();
+  
 
-   router.post("/login", abata.login);// non esiste
+   app.post("/login", abata.basicLogin);
 
-
-     app.use('/api/abata', router);
+   app.use('/api/abatas', router);
    };
+
+

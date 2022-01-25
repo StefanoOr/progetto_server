@@ -29,7 +29,10 @@ app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is d
 app.get("/", (req, res) => {
     res.json({ message: "Server on" });
 });
-app.post("/login",async(req,res)=> {
+
+
+//app.use('/login',)
+/*app.post("/login",async(req,res)=> {
 
     console.log("Login ");
     console.log("Login ");
@@ -39,11 +42,11 @@ app.post("/login",async(req,res)=> {
     	
 
         const query = "SELECT user, password FROM operator WHERE user=? AND password=? ";
-        /*query è la query come la scriveresti in sql
-        * i valori sono sostituiti da un ?
-        * in ordine, il primo preleva l'id
-        * il secondo il nome
-        * il terzo il producer*/
+       query è la query come la scriveresti in sql
+         i valori sono sostituiti da un ?
+         in ordine, il primo preleva l'id
+         il secondo il nome
+         il terzo il producer
        
         const [rows, fields] =  await (await connection).execute(query, [ciccio ,password1] );
         console.log("rows", rows);
@@ -54,9 +57,9 @@ app.post("/login",async(req,res)=> {
     res.end(JSON.stringify({ username: ciccio, password: password1 }));
 
 
-});
+});*/
 
-//require("./routes/abata.routes.js")(app);
+require("./routes/abata.routes.js")(app);
 
 
 
