@@ -31,8 +31,9 @@ app.get("/", (req, res) => {
     res.json({ message: "Server on" });
 });
 app.post("/login",(req,res)=> {
+    
 
-    console.log("Login ")
+    console.log("Login ");
 
     var username = req.body.username;
     	var password = req.body.password;
