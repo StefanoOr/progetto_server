@@ -24,7 +24,8 @@ console.log(ciccio);
 
     
     res.setHeader('Title', 'value');
-    res.end(JSON.stringify({ username: ciccio, password: password1 }));
+    res.end(JSON.stringify({ username: ciccio, password: password1 })); //non stai inviando il risultato della query e non stai verificando se user e password sono presenti,
+                                                                            //fai la query ma ne ignori il risultato, infatti rendi sempre quello che mandi da postman
 
 
 };
