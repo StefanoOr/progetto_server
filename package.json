@@ -1,13 +1,14 @@
 {
   "name": "progetto_server",
   "version": "1.0.0",
-  "description": "",
+  "description": "niente",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Stefano",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
@@ -20,5 +21,13 @@
   },
   "devDependencies": {
     "bluebird": "^3.7.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StefanoOr/progetto_server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/StefanoOr/progetto_server/issues"
+  },
+  "homepage": "https://github.com/StefanoOr/progetto_server#readme"
 }

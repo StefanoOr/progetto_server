@@ -5,7 +5,7 @@ let models = require("./models/models_table");
 const cors = require("cors");
 const connection = require("./models/db");
 
-console.log("questo è il console log:",connection);
+//console.log("questo è il console log:",connection);
 /*const {ActorGroup, Actor, Enum, Event, EventResult, Operator, Parameter, ParameteDetail, Producer, Product,
     Product_detail
 } = require("../models/models_table");
