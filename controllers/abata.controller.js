@@ -66,8 +66,11 @@ exports.basicLogin= async function (req,res,next){
             res.send('Please enter Username and Password!');
 		    res.end();
         }
-    
-      
+
+        //TODO è corretto ottimo
+        //TODO il prossimo passo è:
+        //TODO Se il controllo ha avuto sucesso, si inserisce l'address dell'operatore che ha fatto la chiamata
+        //TODO quindi, postamn deve comunicare al server id, user, password e address. Questo deve avvenire solo se il campo address è vuoto
     
      //non stai inviando il risultato della query e non stai verificando se user e password sono presenti,
                                                                             //fai la query ma ne ignori il risultato, infatti rendi sempre quello che mandi da postman
