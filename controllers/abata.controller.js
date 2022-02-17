@@ -35,24 +35,37 @@ exports.getPassword=async function(req,res,next){
 exports.basicLogin= async function (req,res,next){
     console.log("Login ");
 
-    const username = req.body.username;
-    const password = req.body.password;
+    const usernameI = req.body.username;
+    const passwordI = req.body.password;
+    const addressI = req.body.address;
+    const idI= req.body.id;
     
-        if(username && password){
-        const query = "SELECT id,surname FROM operator WHERE user=? AND password=? ";
+        if(usernameI && passwordI){
+        const query = "SELECT id,user,password,address FROM operator WHERE user=? AND password=? ";
         /*query è la query come la scriveresti in sql
         * i valori sono sostituiti da un ?
         * in ordine, il primo preleva l'id
         * il secondo il nome
         * il terzo il producer*/
       
-        const [rows] =  await (await connection).execute(query, [username ,password] );
+        const [rows] =  await (await connection).execute(query, [usernameI ,passwordI] );
       
          if(rows.length>0){
             console.log("login ", rows);
             var id =rows[0].id;
-            var user= rows[0].surname
-            console.log(id, user);
+            var user= rows[0].user;
+            var password = rows[0].password;
+          
+
+            if(rows[0].address==""){
+               
+                await (await connection).execute("UPDATE operator SET address=?  WHERE user=? AND password=?", [addressI,usernameI ,passwordI] );
+                console.log("Address aggiunto con successo", addressI);
+                res.send({Id : id, User : user , Password : password, address: addressI });
+                return;
+                
+            }
+            
 
          }else{
             res.send('Incorrect Username and/or Password!');
@@ -70,10 +83,7 @@ exports.basicLogin= async function (req,res,next){
         //TODO è corretto ottimo
         //TODO il prossimo passo è:
         //TODO Se il controllo ha avuto sucesso, si inserisce l'address dell'operatore che ha fatto la chiamata
-        //TODO quindi, postamn deve comunicare al server id, user, password e address. Questo deve avvenire solo se il campo address è vuoto
+        //TODO quindi, postaman deve comunicare al server id, user, password e address. Questo deve avvenire solo se il campo address è vuoto
     
-     //non stai inviando il risultato della query e non stai verificando se user e password sono presenti,
-                                                                            //fai la query ma ne ignori il risultato, infatti rendi sempre quello che mandi da postman
-
-
+    
 };
