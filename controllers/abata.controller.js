@@ -41,7 +41,7 @@ exports.basicLogin= async function (req,res,next){
     const idI= req.body.id;
     
         if(usernameI && passwordI){
-        const query = "SELECT id,user,password,address FROM operator WHERE user=? AND password=? ";
+        const query = "SELECT id,user,password,address FROM operator WHERE user=? AND password=? ";//TODO query sbagliata
         /*query è la query come la scriveresti in sql
         * i valori sono sostituiti da un ?
         * in ordine, il primo preleva l'id
