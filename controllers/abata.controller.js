@@ -2,7 +2,7 @@
 const express = require("express");
 const connection = require("../models/db");
 
-exports.getPassword=async function(req,res,next){
+/*exports.getPassword=async function(req,res,next){
     console.log("recovery password");
 
     const user=req.body.username;
@@ -31,7 +31,7 @@ exports.getPassword=async function(req,res,next){
     }
     res.end(JSON.stringify({ id: rows.info}));
  }
-
+*/
 exports.basicLogin= async function (req,res,next){
     console.log("Login ");
 
@@ -40,15 +40,11 @@ exports.basicLogin= async function (req,res,next){
     const addressI = req.body.address;
     const idI= req.body.id;
     
-        if(usernameI && passwordI){
-        const query = "SELECT id,user,password,address FROM operator WHERE user=? AND password=? ";//TODO query sbagliata
-        /*query è la query come la scriveresti in sql
-        * i valori sono sostituiti da un ?
-        * in ordine, il primo preleva l'id
-        * il secondo il nome
-        * il terzo il producer*/
+        if(usernameI && passwordI && idI ){
+        const query = "SELECT user,password,address FROM operator WHERE user=? AND password=? AND id=? AND address IS NOT NULL";
+       
       
-        const [rows] =  await (await connection).execute(query, [usernameI ,passwordI] );
+        const [rows] =  await (await connection).execute(query, [usernameI ,passwordI,idI] );
       
          if(rows.length>0){
             console.log("login ", rows);
@@ -59,7 +55,7 @@ exports.basicLogin= async function (req,res,next){
 
             if(rows[0].address==""){
                
-                await (await connection).execute("UPDATE operator SET address=?  WHERE user=? AND password=?", [addressI,usernameI ,passwordI] );
+                await (await connection).execute("UPDATE operator SET address=?  WHERE user=? AND password=? AND id=?", [addressI,usernameI ,passwordI,idI] );
                 console.log("Address aggiunto con successo", addressI);
                 res.send({Id : id, User : user , Password : password, address: addressI });
                 return;
@@ -74,7 +70,7 @@ exports.basicLogin= async function (req,res,next){
          res.send({Benvenuto : user});
          res.end();
         
-        //console.log("fields", colums);
+      
         }else{
             res.send('Please enter Username and Password!');
 		    res.end();
