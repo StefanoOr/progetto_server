@@ -42,16 +42,22 @@ exports.basicLogin= async function (req,res,next){
     
         if(usernameI && passwordI && idI ){
         const query = "SELECT user,password,address FROM operator WHERE user=? AND password=? AND id=? AND address IS NOT NULL";
-       
+       // TODO errore, ti riporto anche qui la query in italiano per recuperare l'operatore con le caratteristiche richieste
+            //TODO  "Il server controlla se ci sono  id, user, e password sul db con campo address nullo"
+
+            //TODO  se si soddisfa tale condizione si inserisce l'address mandato
+            // dell'operatore che ha mandato i dati e si restituiscono tutti i suoi dati
       
         const [rows] =  await (await connection).execute(query, [usernameI ,passwordI,idI] );
-      
+
+
          if(rows.length>0){
             console.log("login ", rows);
-            var id =rows[0].id;
+            var id =rows[0].id;  //TODO var è deprecata
             var user= rows[0].user;
             var password = rows[0].password;
-          
+
+
 
             if(rows[0].address==""){
                
@@ -76,10 +82,10 @@ exports.basicLogin= async function (req,res,next){
 		    res.end();
         }
 
-        //TODO è corretto ottimo
+
         //TODO il prossimo passo è:
         //TODO Se il controllo ha avuto sucesso, si inserisce l'address dell'operatore che ha fatto la chiamata
-        //TODO quindi, postaman deve comunicare al server id, user, password e address. Questo deve avvenire solo se il campo address è vuoto
+        //TODO quindi, postaman deve comunicare al server id, user, password e address. Questo deve avvenire solo se il campo address è vuoto (null)
     
     
 };
