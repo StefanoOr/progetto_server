@@ -6,11 +6,10 @@ module.exports = app => {
 
    app.post("/login", abata.basicLogin);
 
-   app.put("/update", abata.changePassword);
+   //app.put("/update", abata.changePassword);
 
-   app.post("/recovery", abata.getPassword);
+   //app.post("/recovery", abata.getPassword);
 
    app.use('/api/abatas', router);
    };
-
 

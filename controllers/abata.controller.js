@@ -40,8 +40,8 @@ exports.basicLogin= async function (req,res,next){
     const addressI = req.body.address;
     const idI= req.body.id;
     
-        if(usernameI && passwordI && idI ){
-        const query = "SELECT user,password,address FROM operator WHERE user=? AND password=? AND id=? AND address IS NOT NULL";
+        if(usernameI && passwordI && idI && addressI ){
+        const query = "SELECT user,password,address FROM operator WHERE user=? AND password=? AND id=? AND address IS NULL";
        // TODO errore, ti riporto anche qui la query in italiano per recuperare l'operatore con le caratteristiche richieste
             //TODO  "Il server controlla se ci sono  id, user, e password sul db con campo address nullo"
 
@@ -59,7 +59,7 @@ exports.basicLogin= async function (req,res,next){
 
 
 
-            if(rows[0].address==""){
+            if(rows[0].address==null){
                
                 await (await connection).execute("UPDATE operator SET address=?  WHERE user=? AND password=? AND id=?", [addressI,usernameI ,passwordI,idI] );
                 console.log("Address aggiunto con successo", addressI);
