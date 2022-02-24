@@ -64,14 +64,15 @@ exports.basicLogin= async function (req,res,next){
                 await (await connection).execute("UPDATE operator SET address=?  WHERE user=? AND password=? AND id=?", [addressI,usernameI ,passwordI,idI] );
                 console.log("Address aggiunto con successo", addressI);
                 res.send({Id : id, User : user , Password : password, address: addressI });
-                return;
+                return true;
                 
             }
             
 
          }else{
-            res.send('Incorrect Username and/or Password!');
+            res.send('false!');
             console.log("login fallito ", rows);
+            return false;
          }  
          res.send({Benvenuto : user});
          res.end();
