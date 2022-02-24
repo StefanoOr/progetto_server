@@ -32,61 +32,55 @@ const connection = require("../models/db");
     res.end(JSON.stringify({ id: rows.info}));
  }
 */
-exports.basicLogin= async function (req,res,next){
+exports.basicLogin= async function (req,res,next) {
     console.log("Login ");
 
     const usernameI = req.body.username;
     const passwordI = req.body.password;
     const addressI = req.body.address;
-    const idI= req.body.id;
-    
-        if(usernameI && passwordI && idI && addressI ){
+    const idI = req.body.id;
+
+    if (usernameI && passwordI && idI && addressI) {
         const query = "SELECT user,password,address FROM operator WHERE user=? AND password=? AND id=? AND address IS NULL";
-       // TODO errore, ti riporto anche qui la query in italiano per recuperare l'operatore con le caratteristiche richieste
-            //TODO  "Il server controlla se ci sono  id, user, e password sul db con campo address nullo"
 
-            //TODO  se si soddisfa tale condizione si inserisce l'address mandato
-            // dell'operatore che ha mandato i dati e si restituiscono tutti i suoi dati
-      
-        const [rows] =  await (await connection).execute(query, [usernameI ,passwordI,idI] );
+        const [rows] = await (await connection).execute(query, [usernameI, passwordI, idI]);
 
 
-         if(rows.length>0){
+        if (rows.length > 0) {
             console.log("login ", rows);
-            var id =rows[0].id;  //TODO var è deprecata
-            var user= rows[0].user;
+            var id = rows[0].id;  //TODO var è deprecata, USARE CONST SE IL VALORE CONTENUTO NON VIENE MODIFICATO, OPPURE LET
+            var user = rows[0].user;
             var password = rows[0].password;
 
 
+            if (rows[0].address == null) {
 
-            if(rows[0].address==null){
-               
-                await (await connection).execute("UPDATE operator SET address=?  WHERE user=? AND password=? AND id=?", [addressI,usernameI ,passwordI,idI] );
+                await (await connection).execute("UPDATE operator SET address=?  WHERE user=? AND password=? AND id=?", [addressI, usernameI, passwordI, idI]);
                 console.log("Address aggiunto con successo", addressI);
-                res.send({Id : id, User : user , Password : password, address: addressI });
+                res.send({Id: id, User: user, Password: password, address: addressI});
                 return true;
-                
-            }
-            
 
-         }else{
+            }
+
+
+        } else {
             res.send('false!');
             console.log("login fallito ", rows);
             return false;
-         }  
-         res.send({Benvenuto : user});
-         res.end();
-        
-      
-        }else{
-            res.send('Please enter Username and Password!');
-		    res.end();
         }
+        res.send({Benvenuto: user});
+        res.end();
 
 
+    } else {
+        res.send('Please enter Username and Password!');
+        res.end();
+    }
+}
+        // TODO VA BENE
         //TODO il prossimo passo è:
-        //TODO Se il controllo ha avuto sucesso, si inserisce l'address dell'operatore che ha fatto la chiamata
-        //TODO quindi, postaman deve comunicare al server id, user, password e address. Questo deve avvenire solo se il campo address è vuoto (null)
-    
-    
-};
+        //TODO GESTIONE DEGLI ERRORI, PER EVITARE CHE IL SERVER CRASHI, BISOGNA GESTIRE GLI ERRORI:
+        // AD ESEMPIO ARRIVA UN VALORE INASPETTATO DI ID, AD ESEMPIO UNA STRINGA INVECE DI UN NUMERO, SICURAMENTE LA QUERY FALLISCE
+        // LE ECCEZIONI VENGONO GESTITE ANCHE CON TRY E CATCH COME IN JAVA.
+        // lE RISPOSTE CHE SI DANNO DEVONO ESSERE POSSIBILMENTE NELLA FORMA CLASSICA
+        // DI UN SERVER, AD ESEMPIO 200, 404, 500 ECC.
