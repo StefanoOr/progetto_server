@@ -89,7 +89,7 @@ try{
         res.end();
     }
     }catch(err){
-        res.stat).send();
+        res.status(500).send("errore");
     }
 }
         // TODO VA BENE
