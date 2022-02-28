@@ -34,37 +34,48 @@ const connection = require("../models/db");
 */
 exports.basicLogin= async function (req,res,next) {
     console.log("Login ");
+    let usernameI;
+    let passwordI;
+    let addressI ;
+    let idI ;
 
-    const usernameI = req.body.username;
-    const passwordI = req.body.password;
-    const addressI = req.body.address;
-    const idI = req.body.id;
+     usernameI = req.body.username;
+     passwordI = req.body.password;
+     addressI = req.body.address;
+     idI = req.body.id;
 
+     
+    
+    
+try{
     if (usernameI && passwordI && idI && addressI) {
+        
         const query = "SELECT user,password,address FROM operator WHERE user=? AND password=? AND id=? AND address IS NULL";
-
+        
         const [rows] = await (await connection).execute(query, [usernameI, passwordI, idI]);
-
+        
+            
 
         if (rows.length > 0) {
             console.log("login ", rows);
-            var id = rows[0].id;  //TODO var è deprecata, USARE CONST SE IL VALORE CONTENUTO NON VIENE MODIFICATO, OPPURE LET
-            var user = rows[0].user;
-            var password = rows[0].password;
+            const id = rows[0].id;  //TODO var è deprecata, USARE CONST SE IL VALORE CONTENUTO NON VIENE MODIFICATO, OPPURE LET
+            const user = rows[0].user;
+            const password = rows[0].password;
 
 
             if (rows[0].address == null) {
 
                 await (await connection).execute("UPDATE operator SET address=?  WHERE user=? AND password=? AND id=?", [addressI, usernameI, passwordI, idI]);
                 console.log("Address aggiunto con successo", addressI);
-                res.send({Id: id, User: user, Password: password, address: addressI});
+                res.status(200).send({Id: id, User: user, Password: password, address: addressI});
+                
                 return true;
 
             }
 
 
         } else {
-            res.send('false!');
+            res.status(200).send('false!');
             console.log("login fallito ", rows);
             return false;
         }
@@ -73,8 +84,12 @@ exports.basicLogin= async function (req,res,next) {
 
 
     } else {
-        res.send('Please enter Username and Password!');
+       
+        res.status(401).send('Please enter Username and Password!');
         res.end();
+    }
+    }catch(err){
+        res.stat).send();
     }
 }
         // TODO VA BENE
