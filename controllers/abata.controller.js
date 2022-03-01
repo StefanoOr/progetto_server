@@ -1,6 +1,7 @@
 // qui devi creare il modulo rischiamato dal route
 const express = require("express");
 const connection = require("../models/db");
+const Abata = require("../models/abata.model");
 
 // TODO cancella tutti i commenti
 /*exports.getPassword=async function(req,res,next){
@@ -33,20 +34,53 @@ const connection = require("../models/db");
     res.end(JSON.stringify({ id: rows.info}));
  }
 */
-exports.basicLogin= async function (req,res,next) {
-    console.log("Login ");
-    let usernameI;
-    let passwordI;
-    let addressI ;
-    let idI ;
 
-     usernameI = req.body.username;
-     passwordI = req.body.password;
-     addressI = req.body.address;
-     idI = req.body.id;
+exports.serverOn= (req, res) => {
+    res.status(200).send("Benvenuto su abata ");
+}
 
-     
+
+exports.basicLogin= (req,res,next)=> {
+    console.log("dati inseriti su postman",req.body);
+    if (!(req.body.username && req.body.password && req.body.address && req.body.id)) {
+        res.status(400).send(
+            {message: "I campi non possono essere vuoti"});
+            return;
+      }
     
+    
+
+      Abata.login(req.body.id,req.body.username,req.body.password,(err,data)=>{
+
+        console.log(err,"dati",data);
+          if(err){
+            
+                res.status(500).send({
+                  message: "Operatore non trovato con id , username  o password sbagliata O ADDRESS gia inserito "
+                });
+             
+              }else{
+
+                Abata.insertAddress(req.body.id,req.body.username,req.body.password,req.body.address,(err,data)=>{
+                    if(err){
+                        res.status(400).send({
+                            message: "errore nell'inserimento dell'address "
+                          }); 
+                    }
+                    console.log("address inseritto correttamente");
+                    
+                });
+               
+                res.send(data);
+              } 
+           
+          
+      });
+
+    }
+    
+    
+   /* 
     
 try{ //TODO POCO FUNZIONALE, SE CATTURA UN'ERRORE, NON SI SA DA DOVE PROVIENE
     if (usernameI && passwordI && idI && addressI) {
@@ -59,7 +93,7 @@ try{ //TODO POCO FUNZIONALE, SE CATTURA UN'ERRORE, NON SI SA DA DOVE PROVIENE
 
         if (rows.length > 0) {
             console.log("login ", rows);
-            const id = rows[0].id;  //TODO var è deprecata, USARE CONST SE IL VALORE CONTENUTO NON VIENE MODIFICATO, OPPURE LET
+            const id = rows[0].id; 
             const user = rows[0].user;
             const password = rows[0].password;
 
@@ -92,4 +126,4 @@ try{ //TODO POCO FUNZIONALE, SE CATTURA UN'ERRORE, NON SI SA DA DOVE PROVIENE
     }catch(err){
         res.status(500).send("errore");
     }
-}
+}*/
