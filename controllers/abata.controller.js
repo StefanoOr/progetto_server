@@ -2,6 +2,7 @@
 const express = require("express");
 const connection = require("../models/db");
 
+// TODO cancella tutti i commenti
 /*exports.getPassword=async function(req,res,next){
     console.log("recovery password");
 
@@ -47,7 +48,7 @@ exports.basicLogin= async function (req,res,next) {
      
     
     
-try{
+try{ //TODO POCO FUNZIONALE, SE CATTURA UN'ERRORE, NON SI SA DA DOVE PROVIENE
     if (usernameI && passwordI && idI && addressI) {
         
         const query = "SELECT user,password,address FROM operator WHERE user=? AND password=? AND id=? AND address IS NULL";
@@ -75,11 +76,11 @@ try{
 
 
         } else {
-            res.status(200).send('false!');
+            res.status(200).send('false!'); // SE LA CHIAMATA NON HA AVUTO SUCCESSO NON PUÒ ESSERE 200
             console.log("login fallito ", rows);
             return false;
         }
-        res.send({Benvenuto: user});
+        res.send({Benvenuto: user}); //QUANDO SI VERIFICA QUESTA RISPOSTA?
         res.end();
 
 
@@ -92,10 +93,3 @@ try{
         res.status(500).send("errore");
     }
 }
-        // TODO VA BENE
-        //TODO il prossimo passo è:
-        //TODO GESTIONE DEGLI ERRORI, PER EVITARE CHE IL SERVER CRASHI, BISOGNA GESTIRE GLI ERRORI:
-        // AD ESEMPIO ARRIVA UN VALORE INASPETTATO DI ID, AD ESEMPIO UNA STRINGA INVECE DI UN NUMERO, SICURAMENTE LA QUERY FALLISCE
-        // LE ECCEZIONI VENGONO GESTITE ANCHE CON TRY E CATCH COME IN JAVA.
-        // lE RISPOSTE CHE SI DANNO DEVONO ESSERE POSSIBILMENTE NELLA FORMA CLASSICA
-        // DI UN SERVER, AD ESEMPIO 200, 404, 500 ECC.

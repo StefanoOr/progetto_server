@@ -1,3 +1,4 @@
+//TODO ELIMINA I COMMENTI, C'E' GIÀ CONFUSIONE
 const express = require("express");
 let models = require("./models/models_table");
 //const prova = require("./config/split_db");
