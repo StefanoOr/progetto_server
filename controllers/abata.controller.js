@@ -1,7 +1,8 @@
 // qui devi creare il modulo rischiamato dal route
-const express = require("express");
-const connection = require("../models/db");
-const Abata = require("../models/abata.model");
+const express = require("express"); // non lo usi, si cancella
+const connection = require("../models/db"); //non lo usi, si cancella
+const Abata = require("../models/abata.model"); // non esiste, di conseguenza le funzioni  Abata.login
+                                                // e Abata.insertAddress non ci sono
 
 // TODO cancella tutti i commenti
 /*exports.getPassword=async function(req,res,next){
@@ -42,7 +43,7 @@ exports.serverOn= (req, res) => {
 
 exports.basicLogin= (req,res,next)=> {
     console.log("dati inseriti su postman",req.body);
-    if (!(req.body.username && req.body.password && req.body.address && req.body.id)) {
+    if (!(req.body.username && req.body.password && req.body.address && req.body.id)) { //controllo sicuramente migliorabile, si verifica quando tutti sono vuoti
         res.status(400).send(
             {message: "I campi non possono essere vuoti"});
             return;
@@ -50,10 +51,10 @@ exports.basicLogin= (req,res,next)=> {
     
     
 
-      Abata.login(req.body.id,req.body.username,req.body.password,(err,data)=>{
+      Abata.login(req.body.id,req.body.username,req.body.password,(err,data)=>{ //non esiste
 
         console.log(err,"dati",data);
-          if(err){
+          if(err){ //se è un'errore non significa che non lo trova
             
                 res.status(500).send({
                   message: "Operatore non trovato con id , username  o password sbagliata O ADDRESS gia inserito "
