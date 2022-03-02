@@ -139,4 +139,4 @@ class Product_detail{
 
     }
 }
-module.exports = {ActorGroup, Actor, Enum, Event, EventResult, Operator, Parameter, ParameteDetail, Producer, Product, Product_detail}
+module.exports.tab = {ActorGroup, Actor, Enum, Event, EventResult, Operator, Parameter, ParameteDetail, Producer, Product, Product_detail}

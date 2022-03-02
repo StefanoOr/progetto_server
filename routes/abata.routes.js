@@ -9,7 +9,9 @@ module.exports = app => {
    //app.put("/update", abata.changePassword);
 
    //app.post("/recovery", abata.getPassword);
-
+   
+  app.get("/",abata.serverOn);
+  
    app.use('/api/abatas', router);
    };
 
