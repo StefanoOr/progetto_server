@@ -20,8 +20,8 @@ exports.basicLogin= (req,res,next)=> {
     
     
 
-      Abata.login(req.body.id,req.body.username,req.body.password,(err,data)=>{ //non esiste
-    
+      Abata.login(req.body.id,req.body.username,req.body.password,(err,data)=>{ // scelta non corretta per chiamare la funzione
+        // La via più semplice è usare il modo usato dall'inizio, simulando la programmazione sincrona con await
         console.log(err,"dati",data);
           if(err){ //se è un'errore non significa che non lo trova
             
