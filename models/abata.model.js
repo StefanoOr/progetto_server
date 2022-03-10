@@ -1,47 +1,52 @@
+const res = require("express/lib/response");
 const connection = require("../models/db");
 
-login= async (id,username,password,result)=>{
-    // qui non usi try e catch, inoltre fai la query, ma usi return (nulla) al chiamante  solamente quando non trovi corrispondenza
+ login =async (id,username,password,res)=>{
+   
     console.log(id,password,username);
     let rows;
     try{
     const query = "SELECT user,password,address FROM operator WHERE user=? AND password=? AND id=? AND address IS NULL";
         
-         [rows] = await (await connection).execute(query, [username, password, id] ); //Esempio   simulando la programmazione sincrona
+         [rows] = await (await connection).execute(query, [username, password, id] ); 
          console.log("dati della query login",rows);
+         
+         if (rows.length  == 0){
+            res.status(400).send({
+                message: "Nessun utente trovato , password o username sbagliati o addres gia inserito "}); 
+            return false;
+          }
+          
+        return rows;
         
     }catch(err){
         console.log("login catch",err);
-        res.status(400).send("errore login 400");
-       // result(400, null);
-        return;
+        res.status(400).send({
+            message: "errore  nel login  "}); 
+        return  false;
     }
        
-        if (rows.length  == 0){
-            result(401, null);
-            return;
-          }
         
-        result(200,rows);
 
 };
 
 
-insertAddress = async (id,username,password,address) =>{
+ insertAddress= async (id,username,password,address) =>{
    
     try{
     await (await connection).execute("UPDATE operator SET address=?  WHERE user=? AND password=? AND id=?", [address, username, password, id]);
 
     console.log("address inserito con successo");
-    return;
+   
+    return true;
 
     }catch(err){
         console.log("errore nell'inserimento dell'addresss",err);
-        result(err);
-        return;
+        res.status(400).send({
+            message: "errore  nel update dell'address  "}); 
+        return false;
     }
-    
-             
-}
+        
+};
 
-module.exports ={login,insertAddress};
+module.exports = {login,insertAddress};
