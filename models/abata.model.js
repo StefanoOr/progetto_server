@@ -1,4 +1,5 @@
 const res = require("express/lib/response");
+
 const connection = require("../models/db");
 
  login =async (id,username,password,res)=>{
@@ -49,4 +50,58 @@ const connection = require("../models/db");
         
 };
 
-module.exports = {login,insertAddress};
+newPassword = async(id,user,password,newPassword)=>{
+
+
+    try {
+        const [rows]=await (await connection).execute("SELECT user,password,id FROM operator WHERE user=? AND password=? AND id=? ", [user ,password,id] );
+        console.log("cambiiamento");
+
+        if(rows.length != 0){
+            console.log("risultato query",rows);
+    const query = "UPDATE operator SET password=?  WHERE user=? AND password=? AND id=? ";
+    
+     await (await connection).execute(query, [newPassword,user ,password,id] );
+            console.log("cambio password");
+        }else{
+            throw "I dati inseriti per il cambio password sbagliati"
+        }
+        return true;
+    
+
+    }catch(err){
+        
+       
+        
+        return false;
+    }
+};
+
+getOperatorPassword = async(id,user)=>{
+
+
+    try {
+        const query = "SELECT password FROM operator   WHERE user=? AND id=? ";
+        const [rows] =  await (await connection).execute(query, [user,id] );
+        if(rows.length != 0){
+            console.log("risultato query",rows);
+            
+    
+        }else{
+            throw "I dati inseriti per il recupero password sbagliati"
+        }
+        return rows;
+    
+
+    }catch(err){
+        
+        res.status(401).send("prova");
+       
+        
+        return ;
+    }
+};
+
+
+
+module.exports = {login,insertAddress,newPassword,getOperatorPassword};

@@ -36,6 +36,33 @@ exports.basicLogin= async (req,res,next)=> {
     
 }
 
+exports.getPassword=async function(req,res,next){
+  console.log("recovery password");
+
+
+  const recoveryPasswordOperatoe= await Abata.getOperatorPassword(req.body.id,req.body.username)
+ 
+  
+  
+}
+
+
+exports.changePassword= async function(req,res,next){
+  console.log("ChangePassword");
+  
+
+  
+ const isTrue =await Abata.newPassword(req.body.id,req.body.username,req.body.password, req.body.nuovapassword);
+
+  if(isTrue== true){
+    res.status(200).send("pass cambiata"); 
+  }else{
+    res.status(200).send("pass non cambiata"); 
+  }
+
+  
+}
+
     
     
     
