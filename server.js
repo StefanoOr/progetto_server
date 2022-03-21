@@ -1,7 +1,8 @@
-//TODO ELIMINA I COMMENTI, C'E' GIÀ CONFUSIONE
+
 const express = require("express");
 let models = require("./models/models_table");
 //const prova = require("./config/split_db");
+
 
 const cors = require("cors");
 const connection = require("./models/db");
@@ -15,7 +16,7 @@ const connection = require("./models/db");
 const app = express();
 
 var corsOptions = {
-    origin: "http://localhost:8081"
+    origin: "http://localhost:8081/"
 };
 
 app.use(cors(corsOptions));
@@ -32,8 +33,11 @@ app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is d
 
 
 require("./routes/abata.routes.js")(app);
+ 
 
 
+
+ 
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;

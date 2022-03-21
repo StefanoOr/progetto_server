@@ -2,12 +2,15 @@ const res = require("express/lib/response");
 
 const connection = require("../models/db");
 
+
+
+
  login =async (id,username,password,res)=>{
    
     console.log(id,password,username);
     let rows;
     try{
-    const query = "SELECT user,password,address FROM operator WHERE user=? AND password=? AND id=? AND address IS NULL";
+    const query = "SELECT user,password FROM operator WHERE user=? AND password=? AND id=? ";
         
          [rows] = await (await connection).execute(query, [username, password, id] ); 
          console.log("dati della query login",rows);
@@ -15,7 +18,7 @@ const connection = require("../models/db");
          if (rows.length  == 0){
             res.status(400).send({
                 message: "Nessun utente trovato , password o username sbagliati o addres gia inserito "}); 
-            return false;
+            return rows;
           }
           
         return rows;
@@ -50,7 +53,7 @@ const connection = require("../models/db");
         
 };
 
-newPassword = async(id,user,password,newPassword)=>{
+setNewPassword = async(id,user,password,newPassword)=>{
 
 
     try {
@@ -68,34 +71,34 @@ newPassword = async(id,user,password,newPassword)=>{
         }
         return true;
     
-
     }catch(err){
-        
-       
-        
+
+        console.log(err);
         return false;
     }
 };
 
 getOperatorPassword = async(id,user)=>{
 
-
     try {
         const query = "SELECT password FROM operator   WHERE user=? AND id=? ";
         const [rows] =  await (await connection).execute(query, [user,id] );
         if(rows.length != 0){
             console.log("risultato query",rows);
-            
+            return rows;
     
         }else{
-            throw "I dati inseriti per il recupero password sbagliati"
+            console.log("ERROR");
+            res.status(401).send({
+                message: "errore nel recupero password "});
+            return ;
         }
-        return rows;
+            
     
 
     }catch(err){
         
-        res.status(401).send("prova");
+        //res.status(401).send("prova");
        
         
         return ;
@@ -104,4 +107,4 @@ getOperatorPassword = async(id,user)=>{
 
 
 
-module.exports = {login,insertAddress,newPassword,getOperatorPassword};
+module.exports = {login,insertAddress,setNewPassword,getOperatorPassword};
