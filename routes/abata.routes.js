@@ -2,14 +2,16 @@ module.exports = app => {
   const abata = require("../controllers/abata.controller.js"); //non lo trova perchè è un file vuoto
   const cookieSession = require('cookie-parser');
   var router = require("express").Router();
-  var session = require('express-session');
+  var sessions= require('express-session');
 
 
 
   app.use(cookieSession());
-  app.use(session({
-      name: "session-id",
+  const oneDay= 1000 * 60 * 60 * 24;
+  app.use(sessions({
+     
       secret: "GFGEnter", // Secret key,
+      cookie: { maxAge: oneDay },
       saveUninitialized: false,
       resave: false,
     

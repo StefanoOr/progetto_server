@@ -1,9 +1,10 @@
 
 
+const sessions = require("express-session");
 const Abata = require("../models/abata.model"); 
 var router = require("express").Router();
 
-
+var session;
 
 
 
@@ -20,16 +21,20 @@ exports.serverOn= (req, res) => {
 
 
 exports.basicLogin= async (req,res,next)=> {
+
     console.log("dati inseriti su postman",req.body);
     if (!(req.body.username && req.body.password && req.body.address && req.body.id)) { 
         res.status(401).send(
             {message: "I campi non possono essere vuoti"});
             return;
       }
+      session=req.session;
       
     const prova = await Abata.login(req.body.id,req.body.username,req.body.password,res);
   
             if(prova){ 
+              session.userid=req.body.username;
+              console.log(req.session);
               await  Abata.insertAddress(req.body.id,req.body.username,req.body.password,req.body.address);
                    
               
@@ -37,6 +42,8 @@ exports.basicLogin= async (req,res,next)=> {
                 
                 
                 }
+
+                return res.redirect('/');
            
     
 }
