@@ -4,12 +4,19 @@ const sessions = require("express-session");
 const Abata = require("../models/abata.model"); 
 var router = require("express").Router();
 
-var session;
 
 
 
 
 
+exports.dashboard=(req,res)=>{
+  if(sessions.userid){
+    console.log("sessione",sessions.userid);
+  return res.send({message : "benvenuto", username: sessions.userid});
+  }else{
+    return res.redirect("/");
+  }
+}
 
 
 exports.serverOn= (req, res) => {
@@ -28,22 +35,24 @@ exports.basicLogin= async (req,res,next)=> {
             {message: "I campi non possono essere vuoti"});
             return;
       }
-      session=req.session;
+     
       
-    const prova = await Abata.login(req.body.id,req.body.username,req.body.password,res);
-  
+    const [prova] = await Abata.login(req.body.id,req.body.username,req.body.password,res);
+    
+    
+    
             if(prova){ 
-              session.userid=req.body.username;
+             sessions.userid=prova.user;
               console.log(req.session);
-              await  Abata.insertAddress(req.body.id,req.body.username,req.body.password,req.body.address);
-                   
               
-                return res.redirect('/');
-                
-                
+              await  Abata.insertAddress(req.body.id,req.body.username,req.body.password,req.body.address);
+
+                console.log("attendi");
+                return res.redirect('/dashboard');
                 }
 
-                return res.redirect('/');
+                return res.redirect("/")
+              
            
     
 }
@@ -69,6 +78,7 @@ exports.getPassword=async function(req,res,next){
 
 
 exports.changePassword= async function(req,res,next){
+  if(session)
   console.log("ChangePassword");
   
   if (!(req.body.username && req.body.password && req.body.nuovapassword && req.body.id)) { 

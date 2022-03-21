@@ -25,7 +25,7 @@ module.exports = app => {
 
    app.post("/recovery", abata.getPassword);
 
-   //app.get("/dashboard", abata.dashboard);
+   app.get("/dashboard", abata.dashboard);
    
   app.get("/",abata.serverOn);
 
