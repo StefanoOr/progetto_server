@@ -7,7 +7,19 @@ var router = require("express").Router();
 
 
 
+exports.getAziendaOperator=async (req,res)=>{
 
+    if(sessions.userid){
+
+      const [risultato]= await Abata.getProducer(sessions.userid); 
+     
+      res.send(risultato);
+      return;
+    
+    }
+    res.redirect("/");
+
+}
 
 exports.dashboard=(req,res)=>{
   if(sessions.userid){
@@ -20,8 +32,7 @@ exports.dashboard=(req,res)=>{
 
 
 exports.serverOn= (req, res) => {
-    console.log("sessione ",req.session);
-    console.log("cookie",req.cookies);
+   
     return res.status(200).send("Benvenuto su abata ");
 }
 
@@ -42,16 +53,20 @@ exports.basicLogin= async (req,res,next)=> {
     
     
             if(prova){ 
-             sessions.userid=prova.user;
+             sessions.userid=prova.producer_id;
               console.log(req.session);
               
-              await  Abata.insertAddress(req.body.id,req.body.username,req.body.password,req.body.address);
+             // await  Abata.insertAddress(req.body.id,req.body.username,req.body.password,req.body.address);
 
                 console.log("attendi");
                 return res.redirect('/dashboard');
-                }
 
-                return res.redirect("/")
+                }else{
+                 
+                }
+                
+
+             
               
            
     

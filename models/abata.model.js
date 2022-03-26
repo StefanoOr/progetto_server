@@ -1,4 +1,5 @@
 const res = require("express/lib/response");
+const { getAziendaOperator } = require("../controllers/abata.controller");
 
 const connection = require("../models/db");
 
@@ -10,7 +11,7 @@ const connection = require("../models/db");
     console.log(id,password,username);
     let rows;
     try{
-    const query = "SELECT user,password FROM operator WHERE user=? AND password=? AND id=? ";
+    const query = "SELECT operator.producer_id, actor.id FROM operator JOIN actor ON operator.producer_id=actor.producer_id  WHERE operator.user=? AND operator.password=? AND operator.id=? ";
         
          [rows] = await (await connection).execute(query, [username, password, id] ); 
          console.log("dati della query login",rows);
@@ -106,5 +107,30 @@ getOperatorPassword = async(id,user)=>{
 };
 
 
+getProducer=async(id_producer)=>{
 
-module.exports = {login,insertAddress,setNewPassword,getOperatorPassword};
+    try{
+
+        const query = "SELECT producer.* FROM operator JOIN producer ON producer.id=operator.producer_id WHERE operator.id=?  ";
+        const [rows] =  await (await connection).execute(query, [id_producer] );
+
+        console.log(rows);
+
+        if(rows.length!=0){
+        return rows;
+        }
+        return;
+
+
+    }catch(err){
+
+
+
+    }
+
+
+}
+
+
+
+module.exports = {login,insertAddress,setNewPassword,getOperatorPassword,getProducer};

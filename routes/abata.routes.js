@@ -29,6 +29,8 @@ module.exports = app => {
    
   app.get("/",abata.serverOn);
 
+  app.get("/producerAzienda",abata.getAziendaOperator);
+
 
   
    app.use('/api/abatas', router);
